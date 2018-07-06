@@ -1,0 +1,21 @@
+{{#partial "content"}}
+<div class="panel panel-default">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th> <th>질문</th> <th>사용자 아이디</th><th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#questions}}
+        {{#if @index}}
+        <tr>
+            <th scope="row">{{@index}}</th><td><a href='/questions/{{@index}}'>{{title}}</a></td> <td>{{writer}}</td><td><a href="#" class="btn btn-success" role="button">수정</a></td>
+        </tr>
+        {{/if}}
+        {{/questions}}
+        </tbody>
+    </table>
+</div>
+{{/partial}}
+{{> base}}
