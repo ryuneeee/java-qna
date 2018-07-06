@@ -11,36 +11,36 @@ import java.util.List;
 
 @Controller
 public class QuestionController {
-
     List<Question> questions;
+
     public QuestionController() {
         this.questions = new ArrayList<>();
         this.questions.add(null);
     }
 
 
-    @GetMapping("/questions")
-    public String list(Model model){
+    @GetMapping("/")
+    public String list(Model model) {
         model.addAttribute("questions", questions);
-        return "qna/list";
+        return "index";
     }
 
     @GetMapping("/questions/{id}")
-    public String detail(@PathVariable int id, Model model){
+    public String detail(@PathVariable int id, Model model) {
         model.addAttribute("question", questions.get(id));
         model.addAttribute("qid", id);
         return "qna/show";
     }
 
     @GetMapping("/questions/write")
-    public String form(){
+    public String form() {
         return "qna/form";
     }
 
     @PostMapping("/questions")
-    public String create(Question q, Model model){
+    public String create(Question q, Model model) {
         questions.add(q);
-        return "redirect:/questions";
+        return "redirect:/";
     }
 
 }
