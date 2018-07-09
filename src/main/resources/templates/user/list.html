@@ -12,16 +12,13 @@
         </thead>
         <tbody>
         {{#users}}
-
-        {{#if @index}}
         <tr>
-            <th scope="row">{{@index}}</th>
-            <td><a href="/users/{{@index}}">{{userId}}</a></td>
+            <th scope="row">{{@index_1}}</th>
+            <td><a href="/users/{{id}}">{{userId}}</a></td>
             <td>{{name}}</td>
             <td>{{email}}</td>
-            <td><a href="/users/{{@index}}/userForm" class="btn btn-success" role="button">수정</a></td>
+            <td><a href="/users/{{id}}/userForm" class="btn btn-success" role="button">수정</a></td>
         </tr>
-        {{/if}}
         {{/users}}
         </tbody>
     </table>

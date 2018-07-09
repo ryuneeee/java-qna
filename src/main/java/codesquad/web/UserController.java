@@ -1,39 +1,42 @@
 package codesquad.web;
 
 import codesquad.domain.User;
+import codesquad.domain.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
-    private List<User> users;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public UserController() {
-        this.users = new ArrayList<>();
-        this.users.add(null);
+
     }
 
     @GetMapping("/users/{id}")
-    public String show(@PathVariable int id, Model model) {
-        model.addAttribute("user", users.get(id));
+    public String show(@PathVariable long id, Model model) {
+        Optional<User> user = userRepository.findById(id);
+        model.addAttribute("user", user.get());
         return "/user/profile";
     }
 
     @PostMapping("/users")
     public String create(User user, Model model) {
-        users.add(user);
+        userRepository.save(user);
         return "redirect:/users";
     }
 
     @GetMapping("/users")
     public String list(Model model) {
-        model.addAttribute("users", users);
+        model.addAttribute("users", userRepository.findAll());
         return "/user/list";
     }
 
@@ -43,16 +46,17 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/userForm")
-    public String showUpdate(@PathVariable int id, Model model) {
+    public String showUpdate(@PathVariable long id, Model model) {
         model.addAttribute("id", id);
-        model.addAttribute("user", users.get(id));
+        model.addAttribute("user", userRepository.findById(id).get());
         return "/user/updateForm";
-
     }
 
-    @PostMapping("/users/{id}/userForm")
-    public String updateUser(@PathVariable int id, User user) {
-        this.users.set(id, user);
+    @PostMapping("/users/{id}")
+    public String updateUser(@PathVariable long id, User latest) {
+        userRepository.findById(id).get();
+        latest.setId(id);
+        userRepository.save(latest);
         return "redirect:/users";
     }
 

@@ -1,10 +1,22 @@
 package codesquad.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 30, unique = true, nullable = false)
     private String userId;
     private String password;
     private String name;
     private String email;
+
+    public User() {
+    }
 
     public User(String userId, String password, String name, String email) {
         this.userId = userId;
@@ -47,5 +59,9 @@ public class User {
 
     public static User create(String userId, String password, String name, String email) {
         return new User(userId, password, name, email);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
